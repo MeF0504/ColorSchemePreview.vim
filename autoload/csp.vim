@@ -22,6 +22,7 @@ function! csp#csp(pat='')
                     \ 'pos': 'botleft',
                     \ 'border': [],
                     \ 'zindex': 200,
+                    \ 'cursorline': v:true,
                     \ }
         let wid = popup_create(cs_list, config)
     elseif has('nvim')
@@ -57,31 +58,22 @@ function! csp#csp(pat='')
         call nvim_buf_set_lines(s:bid, 0, -1, 0, cs_list)
         let wid = nvim_open_win(s:bid, v:false, config)
         call win_execute(wid, 'setlocal winhighlight=CursorLine:PmenuSel')
+        call win_execute(wid, 'setlocal cursorline')
     endif
-    call win_execute(wid, 'setlocal cursorline')
     call win_execute(wid, 'setlocal nowrap')
     call win_execute(wid, 'setlocal nofoldenable')
     call win_execute(wid, 'normal! gg')
     execute 'colorscheme '..cs_list[0]
-    if has('popupwin')
-        highlight! link CursorLine PmenuSel
-    endif
     while 1
         redraw
         let key = getcharstr()
         if key == "j" || key == "\<Down>"
             call win_execute(wid, 'normal! j')
             execute "colorscheme "..cs_list[line('.', wid)-1]
-            if has('popupwin')
-                highlight! link CursorLine PmenuSel
-            endif
             redraw
         elseif key == "k" || key == "\<Up>"
             call win_execute(wid, 'normal! k')
             execute "colorscheme "..cs_list[line('.', wid)-1]
-            if has('popupwin')
-                highlight! link CursorLine PmenuSel
-            endif
             redraw
         elseif key == "\<Enter>" || key == "\<Space>"
             " call s:close_win(wid)
