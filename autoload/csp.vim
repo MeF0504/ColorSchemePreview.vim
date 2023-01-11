@@ -63,6 +63,7 @@ function! csp#csp(pat='')
     call win_execute(wid, 'setlocal nowrap')
     call win_execute(wid, 'setlocal nofoldenable')
     call win_execute(wid, 'normal! gg')
+    let g:csp_active = 1
     execute 'colorscheme '..cs_list[0]
     while 1
         redraw
@@ -86,6 +87,7 @@ function! csp#csp(pat='')
         endif
     endwhile
     call s:close_win(wid)
+    let g:csp_active = 0
 endfunction
 
 function! s:close_win(wid) abort
