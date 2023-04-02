@@ -64,6 +64,7 @@ function! csp#csp(pat='')
     call win_execute(wid, 'setlocal nofoldenable')
     call win_execute(wid, 'normal! gg')
     let g:csp_active = 1
+    echo "j/k:select h:light l:dark space/enter:select x/esc:exit"
     execute 'colorscheme '..cs_list[0]
     while 1
         redraw
@@ -76,6 +77,10 @@ function! csp#csp(pat='')
             call win_execute(wid, 'normal! k')
             execute "colorscheme "..cs_list[line('.', wid)-1]
             redraw
+        elseif key == "h" || key == "\<Left>"
+            set background=light
+        elseif key == "l" || key == "\<Right>"
+            set background=dark
         elseif key == "\<Enter>" || key == "\<Space>"
             " call s:close_win(wid)
             execute "colorscheme "..cs_list[line('.', wid)-1]
