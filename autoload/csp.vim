@@ -12,6 +12,7 @@ function! csp#csp(pat='')
     let row = &lines-&cmdheight-1
     let col = &foldcolumn+&numberwidth+3
     let cur_cs = g:colors_name
+    let cur_bg = &background
 
     if has('popupwin')
         let config = {
@@ -87,6 +88,7 @@ function! csp#csp(pat='')
             break
         elseif key == "\<esc>" || key == 'x'
             " call s:close_win(wid)
+            let &background = cur_bg
             execute 'colorscheme '..cur_cs
             break
         endif
